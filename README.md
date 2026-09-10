@@ -24,6 +24,43 @@ API Open-Meteo → Python → SQLite → CSV → Tableau Public
 - Dashboard com filtro por cidade.
 - Testes automatizados da API, banco e serviço de coleta.
 
+## Como executar
+
+Desenvolvido com Python 3.14.7. Os comandos abaixo são para
+PowerShell no Windows.
+
+### Preparar o ambiente
+
+```powershell
+git clone https://github.com/ThiagoBetone/monitoramento-climatico.git
+cd monitoramento-climatico
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+### Coletar e exportar os dados
+
+```powershell
+.\.venv\Scripts\python.exe main.py
+.\.venv\Scripts\python.exe export_csv.py
+```
+
+O primeiro comando consulta a API e salva a observação no SQLite.
+
+Atualmente, a coleta está configurada para Assis (SP).
+Para consultar outra cidade, altere o nome, a latitude e a longitude na
+chamada collect_and_store_weather() em main.py.
+
+O segundo gera `weather_dashboard.csv` com os registros do banco.
+
+Para visualizar os dados atualizados, carregue o CSV no Tableau Public.
+
+### Executar os testes
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest -q
+```
+
 ## Limitações atuais
 
 A coleta e a exportação são executadas manualmente.
@@ -32,6 +69,5 @@ Os horários das observações são armazenados em UTC.
 
 ## Próximas melhorias
 
-- Documentar a instalação e execução.
 - Automatizar a coleta com n8n.
 - Adicionar gráficos de evolução com o crescimento do histórico.
